@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - floor
+  - "\u751F\u547D\u5C0F\u82B1"
   layers:
   - Default
   - TransparentFX
@@ -20,8 +21,8 @@ TagManager:
   - player
   - ladder
   - OnWayPlatform
-  - 
-  - 
+  - "\u751F\u547D\u5C0F\u82B1"
+  - "\u8EDF\u6A39\u85E41"
   - 
   - 
   - 

@@ -5,22 +5,26 @@ using UnityEngine.Windows;
 
 public class CoreOfLife : MonoBehaviour
 {
-    int lifeFlower;
-    public static bool Click1 = false;
-    public static bool Click2 = false;
+    int lifeFlower1;
+    public bool SkillaniOn = false;
     public static bool aniOn = false;
     public static bool aniOff = false;
-    private int hp = 1;
-    private bool Contact = false;
-    private bool isOver = false;
-    [SerializeField] private string selectableTag = "lifeFlower";
+    public static bool Click1 = false;
+    public static bool Click2 = false; 
+    public static bool Contact = false;
+    public static bool isOver = false;
+    public Animator ani;
+    public static int hp = 1;
+    [SerializeField] private string selectableTag = "生命小花";
+    [SerializeField] private GameObject Skill;
 
     private void Start()
     {
-        lifeFlower = LayerMask.NameToLayer("lifeFlower");
+        lifeFlower1 = LayerMask.NameToLayer("生命小花");
     }
     private void Update()
     {
+        print(isOver);
         ClickSelect();
         touch();
     }
@@ -51,31 +55,51 @@ public class CoreOfLife : MonoBehaviour
             }
         }
     }
-    private void touch()
+
+
+private void touch()
+{
+    if (isOver == true)
     {
-        if (isOver == true)
+        if (Contact == true)
         {
-            if (Contact == true)
+            if (Input.GetMouseButtonDown(0) && EnergyNumber.a <= 2 && EnergyNumber.a >= 0 && hp == 1)
             {
-                if (Input.GetMouseButtonDown(0) && EnergyNumber.a <= 2 && EnergyNumber.a >= 0 && hp == 1)
-                {
-                    Click1 = true;
-                    aniOn = true;
-                    hp -= 1;
-                }
-                if (Input.GetMouseButtonDown(1) && EnergyNumber.a >= 1 && EnergyNumber.a <= 3 && hp == 0)
-                {
-                    Click2 = true;
-                    aniOff = true;
-                    hp += 1;
-                }
+                Click1 = true;
+                aniOn = true;
+                hp -= 1;
+                lifeFlower.SET -= 1;
+            }
+            if (Input.GetMouseButtonDown(1) && EnergyNumber.a >= 1 && EnergyNumber.a <= 4 && hp == 0)
+            {
+                Click2 = true;
+                aniOff = true;
+                hp += 1;
+                lifeFlower.SET += 1;
             }
         }
     }
-    GameObject ClickSelect()
+        if (isOver == true)
+        {
+            if (Contact == false)
+            {
+                if (Input.GetMouseButtonDown(0)|| Input.GetMouseButtonDown(1))
+                {   
+                    ani.SetBool("click1", true);
+                }
+                else
+                {
+                    ani.SetBool("click1", false);
+                }
+            }
+        }
+
+    }
+
+GameObject ClickSelect()
     {
         Vector2 rayPos = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
-        RaycastHit2D hit = Physics2D.Raycast(rayPos, Vector2.zero, 0f,LayerMask.GetMask("lifeFlower"));
+        RaycastHit2D hit = Physics2D.Raycast(rayPos, Vector2.zero, 0f,LayerMask.GetMask("生命小花"));
         var selection = hit.transform;
         if (selection.CompareTag(selectableTag))
         {

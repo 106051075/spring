@@ -113,6 +113,7 @@ public class PlayerControl : MonoBehaviour
         Run();
         Jump();
         Climb();
+        SwitchAnimation();
     }
 
     void CheckFloor()

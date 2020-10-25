@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        print(Tab);
+        //print(Tab);
         if (Input.GetKeyUp(KeyCode.Escape))
         {
             pauseMenu.SetActive(true);
