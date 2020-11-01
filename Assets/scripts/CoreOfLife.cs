@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Windows;
+using UnityEngine.UI;
 
 public class CoreOfLife : MonoBehaviour
 {
@@ -15,8 +16,13 @@ public class CoreOfLife : MonoBehaviour
     public static bool isOver = false;
     public Animator ani;
     public static int hp = 1;
+    private float timer_f = 0f;
+    private int timer_i = 0;
+    public int remind_i = 0;
+    public bool remind_b = false;
+
     [SerializeField] private string selectableTag = "生命小花";
-    [SerializeField] private GameObject Skill;
+    [SerializeField] private GameObject RemindToRead;
 
     private void Start()
     {
@@ -24,7 +30,27 @@ public class CoreOfLife : MonoBehaviour
     }
     private void Update()
     {
-        print(isOver);
+        if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
+        {
+            timer_f += Time.fixedDeltaTime;
+            timer_i = (int)timer_f;
+            Debug.Log(timer_i);
+        }
+        if (Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1))
+        {
+            timer_f = 0;
+        }
+        if(remind_b)
+        {
+            RemindToRead.SetActive(true);
+        }
+        else if(!remind_b || remind_i >= 100)
+        {
+            RemindToRead.SetActive(false);
+            remind_i = 0;
+        }
+        //print(isOver);
+        //print(timer_f);
         ClickSelect();
         touch();
     }
@@ -34,6 +60,8 @@ public class CoreOfLife : MonoBehaviour
         if(other.gameObject.CompareTag(selectableTag))
         {
             Contact = true;
+            remind_i += 1;
+            remind_b = true;
         }
     }
     private void OnTriggerExit2D(Collider2D other)
@@ -56,29 +84,50 @@ public class CoreOfLife : MonoBehaviour
         }
     }
 
-
 private void touch()
 {
-    if (isOver == true)
-    {
+  if (isOver == true)
+     {
         if (Contact == true)
-        {
-            if (Input.GetMouseButtonDown(0) && EnergyNumber.a <= 2 && EnergyNumber.a >= 0 && hp == 1)
             {
-                Click1 = true;
-                aniOn = true;
-                hp -= 1;
-                lifeFlower.SET -= 1;
+                if (timer_f >= 1.75)
+                {
+                    if (Input.GetMouseButton(0) && EnergyNumber.a <= 2 && EnergyNumber.a >= 0 && hp == 1)
+                    {
+                        Click1 = true;
+                        aniOn = true;
+                        hp -= 1;
+                        lifeFlower.SET -= 1;
+                    }
+
+                    if (Input.GetMouseButton(1) && EnergyNumber.a >= 1 && EnergyNumber.a <= 4 && hp == 0)
+                    {
+                        Click2 = true;
+                        aniOff = true;
+                        hp += 1;
+                        lifeFlower.SET += 1;
+                    }
+                }
             }
-            if (Input.GetMouseButtonDown(1) && EnergyNumber.a >= 1 && EnergyNumber.a <= 4 && hp == 0)
+     }
+        if (isOver == true)
+        {
+            if (Contact == true)
             {
-                Click2 = true;
-                aniOff = true;
-                hp += 1;
-                lifeFlower.SET += 1;
+                if (timer_f <= 1.75)
+                   {
+                    if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
+                        {
+                                GetComponent<CanvasGroup>().alpha = 1;
+                        }
+                   }
+                if(timer_f >= 1.75 || Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1))
+                   {
+                      GetComponent<CanvasGroup>().alpha = 0;
+                   }
+
             }
         }
-    }
         if (isOver == true)
         {
             if (Contact == false)

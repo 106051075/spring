@@ -32,27 +32,38 @@ public class GameManager : MonoBehaviour
     public GameObject page52;
     public GameObject page61;
 
-    public int Tab = 0;
+    //public static int Tab = 0;
+    public bool Tab = false;
+    public bool Escape = false;
 
 
     void Update()
     {
         //print(Tab);
-        if (Input.GetKeyUp(KeyCode.Escape))
+        if (Input.GetKeyUp(KeyCode.Escape) && !Tab)
+        {
+            Escape = !Escape;
+        }
+        if (Escape)
         {
             pauseMenu.SetActive(true);
         }
-        if (Input.GetKeyUp(KeyCode.Tab))
+        else
         {
-            Tab += 1;
+            pauseMenu.SetActive(false);
         }
-        if (Tab % 2 == 0)
+
+        if (Input.GetKeyUp(KeyCode.Tab) && !Escape)
         {
-            illustratedMenu.SetActive(false);
+            Tab = !Tab;
+        }
+        if (Tab)
+        {
+            illustratedMenu.SetActive(true);
         }
         else
         {
-            illustratedMenu.SetActive(true);
+            illustratedMenu.SetActive(false);
         }
     }
     public void StartGame()
@@ -65,7 +76,7 @@ public class GameManager : MonoBehaviour
     }
     public void Cancel()
     {
-        SceneManager.LoadScene("spring");
+        pauseMenu.SetActive(false);
     }
     public void Restart()
     {

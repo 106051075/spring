@@ -7,12 +7,21 @@ public class MainGameManager : MonoBehaviour
 {
     public GameObject pauseMenu;
     public int Tab = 0;
+    public bool Escape = false;
 
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.Escape))
         {
+            Escape = !Escape;
+        }
+        if (Escape)
+        {
             pauseMenu.SetActive(true);
+        }
+        else
+        {
+            pauseMenu.SetActive(false);
         }
     }
     public void StartGame()
