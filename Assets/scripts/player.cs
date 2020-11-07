@@ -95,6 +95,7 @@ public class PlayerControl : MonoBehaviour
         SwitchAnimation();
         CheckAirStatus();
         healthBar();
+        print(isFloor);
         #region 受傷屏幕效果
         if (isTalkingDamage)
         {
@@ -110,7 +111,7 @@ public class PlayerControl : MonoBehaviour
     private void FixedUpdate()
     {
         walk();
-        Run();
+        //Run();
         Jump();
         Climb();
         SwitchAnimation();
@@ -176,33 +177,33 @@ public class PlayerControl : MonoBehaviour
     }
     #endregion
     #region 跑步
-    void Run()
-    {
-        if (Input.GetAxisRaw("Horizontal") != 0 && Input.GetKey(KeyCode.LeftShift))
-        {
-            float horizontalMovement = Input.GetAxisRaw("Horizontal") * RunSpeed * Time.deltaTime;
-            Vector3 directionOfMovement = new Vector3(horizontalMovement, 0, 0);
-            gameObject.transform.Translate(directionOfMovement);
-            spr.flipX = false;
-            face = Face.Right;
-            ani.SetBool("status", false);
-            ani.SetBool("Jump", false);
-            ani.SetBool("Run", true);
+    //void Run()
+    //{
+        //if (Input.GetAxisRaw("Horizontal") != 0 && Input.GetKey(KeyCode.LeftShift))
+        //{
+            //float horizontalMovement = Input.GetAxisRaw("Horizontal") * RunSpeed * Time.deltaTime;
+            //Vector3 directionOfMovement = new Vector3(horizontalMovement, 0, 0);
+            //gameObject.transform.Translate(directionOfMovement);
+           // spr.flipX = false;
+           // face = Face.Right;
+            //ani.SetBool("status", false);
+            //ani.SetBool("Jump", false);
+            //ani.SetBool("Run", true);
 
-        }
-        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.LeftShift))
-        {
-            spr.flipX = true;
-            face = Face.Left;
-            ani.SetBool("status", false);
-            ani.SetBool("Jump", false);
-            ani.SetBool("Run", true);
-        }
-        if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
-        {
-            ani.SetBool("Run", false);
-        }
-    }
+        //}
+        //if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.LeftShift))
+        //{
+            //spr.flipX = true;
+            //face = Face.Left;
+           // ani.SetBool("status", false);
+           // ani.SetBool("Jump", false);
+            //ani.SetBool("Run", true);
+        //}
+        //if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
+        //{
+            //ani.SetBool("Run", false);
+        //}
+    //}
     #endregion
     #region 跳躍
     private void Jump()

@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject pauseMenu;
     public GameObject illustratedMenu;
+    public GameObject Remind;
     public GameObject plant1;
     public GameObject plant1_r;
     public GameObject plant2;
@@ -32,9 +33,11 @@ public class GameManager : MonoBehaviour
     public GameObject page52;
     public GameObject page61;
 
+
     //public static int Tab = 0;
     public bool Tab = false;
     public bool Escape = false;
+    public static int clickTheButton = 0;
 
 
     void Update()
@@ -65,6 +68,8 @@ public class GameManager : MonoBehaviour
         {
             illustratedMenu.SetActive(false);
         }
+
+        
     }
     public void StartGame()
     {
@@ -81,6 +86,12 @@ public class GameManager : MonoBehaviour
     public void Restart()
     {
         Application.LoadLevel (Application.loadedLevel);            
+    }
+
+    public void click()
+    {
+        Tab = true;
+        clickTheButton += 1;
     }
     public void Plant1()
     {

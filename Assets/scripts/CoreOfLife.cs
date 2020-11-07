@@ -18,6 +18,7 @@ public class CoreOfLife : MonoBehaviour
     public static int hp = 1;
     private float timer_f = 0f;
     private int timer_i = 0;
+
     public int remind_i = 0;
     public bool remind_b = false;
 
@@ -40,15 +41,17 @@ public class CoreOfLife : MonoBehaviour
         {
             timer_f = 0;
         }
-        if(remind_b)
+
+
+        if(remind_b && GameManager.clickTheButton == 0)
         {
             RemindToRead.SetActive(true);
-        }
-        else if(!remind_b || remind_i >= 100)
+        }        
+        else
         {
             RemindToRead.SetActive(false);
-            remind_i = 0;
         }
+
         //print(isOver);
         //print(timer_f);
         ClickSelect();
@@ -60,7 +63,6 @@ public class CoreOfLife : MonoBehaviour
         if(other.gameObject.CompareTag(selectableTag))
         {
             Contact = true;
-            remind_i += 1;
             remind_b = true;
         }
     }
@@ -114,14 +116,14 @@ private void touch()
         {
             if (Contact == true)
             {
-                if (timer_f <= 1.75)
+                if (timer_f <= 2)
                    {
                     if (Input.GetMouseButton(0) || Input.GetMouseButton(1))
                         {
                                 GetComponent<CanvasGroup>().alpha = 1;
                         }
                    }
-                if(timer_f >= 1.75 || Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1))
+                if(timer_f >= 2 || Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1))
                    {
                       GetComponent<CanvasGroup>().alpha = 0;
                    }
